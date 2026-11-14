@@ -6357,6 +6357,9 @@ Utilities
       get_all_craft_recipes_fuel = true,
       -- Whether `core.get_all_craft_recipes` may return the `replacements` field (5.17.0)
       get_all_craft_recipes_replacements = true,
+      -- `ObjectRef:set_camera()` accepts `third_person_distance`
+      -- (Luanti Builders fork only)
+      camera_third_person_distance = true,
   }
   ```
 
@@ -9828,6 +9831,12 @@ You **must not** mix names and track numbers to refer to the same animation.
       - `third`: third-person camera
       - `third_front`: third-person camera, looking opposite of movement direction
     * Supported by clients since 5.12.0.
+    * `third_person_distance`: Maximum distance of the third-person camera
+      from the player, in nodes (Luanti Builders fork only).
+      The camera still stops in front of the first walkable node.
+      Clamped between `1` and `20`. Default is `2.75`.
+      Left unchanged if not a number or NaN.
+      Only clients of the fork apply it; stock clients ignore it.
 * `get_camera()`: Returns the camera parameters as a table as above.
 * `send_mapblock(blockpos)`:
     * Sends an already loaded mapblock to the player.

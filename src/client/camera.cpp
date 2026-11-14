@@ -421,8 +421,10 @@ void Camera::update(LocalPlayer* player, f32 frametime, f32 tool_reload_ratio)
 		my_cp.Y += 2;
 
 		// Calculate new position
+		// Distance is server-settable (fork addition), default 2.75 nodes
 		bool abort = false;
-		for (int i = BS; i <= BS * 2.75; i++) {
+		const f32 max_distance = BS * player->third_person_camera_distance;
+		for (int i = BS; i <= max_distance; i++) {
 			my_cp.X = m_camera_position.X + m_camera_direction.X * -i;
 			my_cp.Z = m_camera_position.Z + m_camera_direction.Z * -i;
 			if (i > 12)

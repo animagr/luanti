@@ -704,6 +704,7 @@ int ObjectRef::l_set_camera(lua_State *L)
 
 	if (lua_isnoneornil(L, 2)) {
 		player->allowed_camera_mode = CAMERA_MODE_ANY;
+		player->third_person_camera_distance = Player::THIRD_PERSON_DISTANCE_DEFAULT;
 	} else {
 		luaL_checktype(L, 2, LUA_TTABLE);
 
@@ -711,6 +712,14 @@ int ObjectRef::l_set_camera(lua_State *L)
 		if (lua_isstring(L, -1))
 			string_to_enum(es_CameraMode, player->allowed_camera_mode, lua_tostring(L, -1));
 		lua_pop(L, 1);
+
+		f32 distance;
+		if (getfloatfield(L, 2, "third_person_distance", distance) &&
+				!std::isnan(distance)) {
+			player->third_person_camera_distance = rangelim(distance,
+					Player::THIRD_PERSON_DISTANCE_MIN,
+					Player::THIRD_PERSON_DISTANCE_MAX);
+		}
 	}
 
 	getServer(L)->SendCamera(player->getPeerId(), player);
@@ -727,6 +736,7 @@ int ObjectRef::l_get_camera(lua_State *L)
 
 	lua_newtable(L);
 	setstringfield(L, -1, "mode", enum_to_string(es_CameraMode, player->allowed_camera_mode));
+	setfloatfield(L, -1, "third_person_distance", player->third_person_camera_distance);
 
 	return 1;
 }

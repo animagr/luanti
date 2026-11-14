@@ -30,10 +30,12 @@
 #include "util/serialize.h"
 #include "util/srp.h"
 #include "util/hashing.h"
+#include "util/numeric.h"
 #include "tileanimation.h"
 #include "gettext.h"
 #include "skyparams.h"
 #include "particles.h"
+#include <cmath>
 #include <memory>
 #include <sstream>
 
@@ -1607,6 +1609,17 @@ void Client::handleCommand_Camera(NetworkPacket* pkt)
 	player->allowed_camera_mode = static_cast<CameraMode>(tmp);
 	if (player->allowed_camera_mode >= CameraMode_END)
 		player->allowed_camera_mode = CAMERA_MODE_ANY;
+
+	// Fork addition; stock servers send only the mode byte
+	if (pkt->hasRemainingBytes()) {
+		f32 distance;
+		*pkt >> distance;
+		if (!std::isnan(distance)) {
+			player->third_person_camera_distance = rangelim(distance,
+					Player::THIRD_PERSON_DISTANCE_MIN,
+					Player::THIRD_PERSON_DISTANCE_MAX);
+		}
+	}
 
 	m_client_event_queue.push(new ClientEvent(CE_UPDATE_CAMERA));
 }

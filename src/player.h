@@ -189,6 +189,13 @@ public:
 
 	CameraMode allowed_camera_mode = CAMERA_MODE_ANY;
 
+	// Maximum distance of the third-person camera behind (or in front of)
+	// the player, in nodes. Settable by the server (fork addition).
+	static constexpr f32 THIRD_PERSON_DISTANCE_DEFAULT = 2.75f;
+	static constexpr f32 THIRD_PERSON_DISTANCE_MIN = 1.0f;
+	static constexpr f32 THIRD_PERSON_DISTANCE_MAX = 20.0f;
+	f32 third_person_camera_distance = THIRD_PERSON_DISTANCE_DEFAULT;
+
 	v3f eye_offset_first;
 	v3f eye_offset_third;
 	v3f eye_offset_third_front;

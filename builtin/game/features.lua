@@ -59,6 +59,7 @@ core.features = {
 	compress_raw_deflate = true,
 	get_all_craft_recipes_fuel = true,
 	get_all_craft_recipes_replacements = true,
+	camera_third_person_distance = true, -- fork addition (Luanti Builders)
 }
 
 function core.has_feature(arg)

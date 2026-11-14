@@ -462,6 +462,8 @@ enum ToClientCommand : u16
 	TOCLIENT_CAMERA = 0x48,
 	/*
 		u8 allowed_camera_mode
+		-- fork addition (Luanti Builders), optional:
+		f32 third_person_camera_distance (in nodes)
 	*/
 
 	TOCLIENT_HUDADD = 0x49,
